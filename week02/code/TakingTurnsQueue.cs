@@ -45,6 +45,11 @@ public class TakingTurnsQueue
                 person.Turns -= 1;
                 _people.Enqueue(person);
             }
+            else if (person.Turns <= 0)
+            {
+                // People with infinite turns will stay in the queue forever
+                _people.Enqueue(person);
+            }
 
             return person;
         }
@@ -55,3 +60,4 @@ public class TakingTurnsQueue
         return _people.ToString();
     }
 }
+
