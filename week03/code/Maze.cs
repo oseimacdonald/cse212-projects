@@ -6,13 +6,13 @@
 /// (x,y) : [left, right, up, down]
 ///
 /// 'x' and 'y' are integers and represents locations in the maze.
-/// 'left', 'right', 'up', and 'down' are boolean are represent valid directions
+/// 'left', 'right', 'up', and 'down' are booleans that represent valid directions
 ///
 /// If a direction is false, then we can assume there is a wall in that direction.
 /// If a direction is true, then we can proceed.  
 ///
-/// If there is a wall, then throw an InvalidOperationException with the message "Can't go that way!".  If there is no wall,
-/// then the 'currX' and 'currY' values should be changed.
+/// If there is a wall, then throw an InvalidOperationException with the message "Can't go that way!".  
+/// If there is no wall, then the 'currX' and 'currY' values should be changed.
 /// </summary>
 public class Maze
 {
@@ -25,43 +25,59 @@ public class Maze
         _mazeMap = mazeMap;
     }
 
-    // TODO Problem 4 - ADD YOUR CODE HERE
-    /// <summary>
-    /// Check to see if you can move left.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
+    // Move left: Check if left is true, if yes, update _currX
     public void MoveLeft()
     {
-        // FILL IN CODE
+        var currentPosition = (x: _currX, y: _currY);
+        
+        if (!_mazeMap.ContainsKey(currentPosition) || !_mazeMap[currentPosition][0]) // [0] is 'left'
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currX--; // Move left
     }
 
-    /// <summary>
-    /// Check to see if you can move right.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
+    // Move right: Check if right is true, if yes, update _currX
     public void MoveRight()
     {
-        // FILL IN CODE
-    }
+        var currentPosition = (x: _currX, y: _currY);
+        
+        if (!_mazeMap.ContainsKey(currentPosition) || !_mazeMap[currentPosition][1]) // [1] is 'right'
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
 
-    /// <summary>
-    /// Check to see if you can move up.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
+        _currX++; // Move right
+    }    
+
+    // Move up: Check if up is true, if yes, update _currY
     public void MoveUp()
     {
-        // FILL IN CODE
+        var currentPosition = (x: _currX, y: _currY);
+        
+        if (!_mazeMap.ContainsKey(currentPosition) || !_mazeMap[currentPosition][2]) // [2] is 'up'
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currY--; // Move up
     }
 
-    /// <summary>
-    /// Check to see if you can move down.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
+    // Move down: Check if down is true, if yes, update _currY
     public void MoveDown()
     {
-        // FILL IN CODE
+        var currentPosition = (x: _currX, y: _currY);
+        
+        if (!_mazeMap.ContainsKey(currentPosition) || !_mazeMap[currentPosition][3]) // [3] is 'down'
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currY++; // Move down
     }
 
+    // Get the current status of the maze (current position)
     public string GetStatus()
     {
         return $"Current location (x={_currX}, y={_currY})";
