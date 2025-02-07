@@ -106,51 +106,48 @@ public static class SetsAndMaps
     /// <param name="word1">First word</param>
     /// <param name="word2">Second word</param>
     /// <returns>True if the words are anagrams, false otherwise</returns>
-    public static bool IsAnagram(string word1, string word2)
+public static bool IsAnagram(string word1, string word2)
+{
+    // Remove spaces and convert to lowercase for case insensitivity
+    word1 = word1.Replace(" ", "").ToLower();
+    word2 = word2.Replace(" ", "").ToLower();
+
+    // If the lengths are different, the words cannot be anagrams
+    if (word1.Length != word2.Length)
     {
-        // Normalize the words: remove spaces and convert to lowercase
-        word1 = word1.Replace(" ", "").ToLower();
-        word2 = word2.Replace(" ", "").ToLower();
-
-        // If the lengths are different, they can't be anagrams
-        if (word1.Length != word2.Length)
-        {
-            return false;
-        }
-
-        // Create dictionaries to count the frequency of each letter
-        var dict1 = new Dictionary<char, int>();
-        var dict2 = new Dictionary<char, int>();
-
-        // Count the frequency of each letter in word1
-        foreach (var c in word1)
-        {
-            if (dict1.ContainsKey(c))
-            {
-                dict1[c]++;
-            }
-            else
-            {
-                dict1[c] = 1;
-            }
-        }
-
-        // Count the frequency of each letter in word2
-        foreach (var c in word2)
-        {
-            if (dict2.ContainsKey(c))
-            {
-                dict2[c]++;
-            }
-            else
-            {
-                dict2[c] = 1;
-            }
-        }
-
-        // Compare the two dictionaries
-        return dict1.SequenceEqual(dict2);
+        return false;
     }
+
+    // Create an array to count the frequency of each character (assuming lowercase English letters)
+    int[] count = new int[26]; // One index for each letter a-z
+
+    // Iterate through both words
+    for (int i = 0; i < word1.Length; i++)
+    {
+        // Ensure that the characters are between 'a' and 'z' before processing
+        if (word1[i] >= 'a' && word1[i] <= 'z') 
+        {
+            count[word1[i] - 'a']++; // Increment count for the character in word1
+        }
+
+        if (word2[i] >= 'a' && word2[i] <= 'z') 
+        {
+            count[word2[i] - 'a']--; // Decrement count for the character in word2
+        }
+    }
+
+    // If all counts are zero, the words are anagrams
+    foreach (int c in count)
+    {
+        if (c != 0)
+        {
+            return false; // If any count is not zero, they are not anagrams
+        }
+    }
+
+    return true; // The words are anagrams
+}
+
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
